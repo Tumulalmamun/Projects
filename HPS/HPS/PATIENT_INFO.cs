@@ -23,7 +23,7 @@ namespace HPS
             {
                 // Ask for confirmation before clearing
                 DialogResult result = MessageBox.Show("Are you sure you want to clear all form data?",
-                                                    "Confirm Clear",
+                                                    "Confirm Clear!!",
                                                     MessageBoxButtons.YesNo,
                                                     MessageBoxIcon.Question);
 

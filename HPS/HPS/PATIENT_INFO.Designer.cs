@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.grpPatientInfo = new System.Windows.Forms.GroupBox();
-            this.btnRefDrDelete = new System.Windows.Forms.Button();
-            this.btnAllDelete = new System.Windows.Forms.Button();
+            this.txtContactNumber = new System.Windows.Forms.TextBox();
+            this.lblContactNumber = new System.Windows.Forms.Label();
             this.txtRefBy = new System.Windows.Forms.TextBox();
             this.lblRefBy = new System.Windows.Forms.Label();
             this.cmbSex = new System.Windows.Forms.ComboBox();
@@ -113,6 +113,8 @@
             this.btnSave = new System.Windows.Forms.Button();
             this.lblTitle = new System.Windows.Forms.Label();
             this.lblPoweredBy = new System.Windows.Forms.Label();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.txtReportId = new System.Windows.Forms.TextBox();
             this.grpPatientInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numAge)).BeginInit();
             this.grpHematology.SuspendLayout();
@@ -124,8 +126,8 @@
             // 
             // grpPatientInfo
             // 
-            this.grpPatientInfo.Controls.Add(this.btnRefDrDelete);
-            this.grpPatientInfo.Controls.Add(this.btnAllDelete);
+            this.grpPatientInfo.Controls.Add(this.txtContactNumber);
+            this.grpPatientInfo.Controls.Add(this.lblContactNumber);
             this.grpPatientInfo.Controls.Add(this.txtRefBy);
             this.grpPatientInfo.Controls.Add(this.lblRefBy);
             this.grpPatientInfo.Controls.Add(this.cmbSex);
@@ -148,36 +150,29 @@
             this.grpPatientInfo.TabStop = false;
             this.grpPatientInfo.Text = "Patient\'s Information";
             // 
-            // btnRefDrDelete
+            // txtContactNumber
             // 
-            this.btnRefDrDelete.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(53)))), ((int)(((byte)(69)))));
-            this.btnRefDrDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRefDrDelete.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.btnRefDrDelete.ForeColor = System.Drawing.Color.White;
-            this.btnRefDrDelete.Location = new System.Drawing.Point(485, 85);
-            this.btnRefDrDelete.Name = "btnRefDrDelete";
-            this.btnRefDrDelete.Size = new System.Drawing.Size(80, 25);
-            this.btnRefDrDelete.TabIndex = 15;
-            this.btnRefDrDelete.Text = "Ref.Dr Delete";
-            this.btnRefDrDelete.UseVisualStyleBackColor = false;
+            this.txtContactNumber.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.txtContactNumber.Location = new System.Drawing.Point(222, 17);
+            this.txtContactNumber.Name = "txtContactNumber";
+            this.txtContactNumber.Size = new System.Drawing.Size(159, 23);
+            this.txtContactNumber.TabIndex = 13;
+            this.txtContactNumber.TextChanged += new System.EventHandler(this.txtContactNumber_TextChanged);
             // 
-            // btnAllDelete
+            // lblContactNumber
             // 
-            this.btnAllDelete.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(117)))), ((int)(((byte)(125)))));
-            this.btnAllDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAllDelete.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.btnAllDelete.ForeColor = System.Drawing.Color.White;
-            this.btnAllDelete.Location = new System.Drawing.Point(205, 85);
-            this.btnAllDelete.Name = "btnAllDelete";
-            this.btnAllDelete.Size = new System.Drawing.Size(80, 25);
-            this.btnAllDelete.TabIndex = 14;
-            this.btnAllDelete.Text = "All Delete";
-            this.btnAllDelete.UseVisualStyleBackColor = false;
+            this.lblContactNumber.AutoSize = true;
+            this.lblContactNumber.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.lblContactNumber.Location = new System.Drawing.Point(149, 20);
+            this.lblContactNumber.Name = "lblContactNumber";
+            this.lblContactNumber.Size = new System.Drawing.Size(71, 15);
+            this.lblContactNumber.TabIndex = 14;
+            this.lblContactNumber.Text = "Contact No:";
             // 
             // txtRefBy
             // 
             this.txtRefBy.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.txtRefBy.Location = new System.Drawing.Point(280, 25);
+            this.txtRefBy.Location = new System.Drawing.Point(480, 51);
             this.txtRefBy.Name = "txtRefBy";
             this.txtRefBy.Size = new System.Drawing.Size(200, 23);
             this.txtRefBy.TabIndex = 6;
@@ -186,7 +181,7 @@
             // 
             this.lblRefBy.AutoSize = true;
             this.lblRefBy.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblRefBy.Location = new System.Drawing.Point(215, 28);
+            this.lblRefBy.Location = new System.Drawing.Point(415, 54);
             this.lblRefBy.Name = "lblRefBy";
             this.lblRefBy.Size = new System.Drawing.Size(46, 15);
             this.lblRefBy.TabIndex = 12;
@@ -200,7 +195,7 @@
             this.cmbSex.Items.AddRange(new object[] {
             "Male",
             "Female"});
-            this.cmbSex.Location = new System.Drawing.Point(750, 55);
+            this.cmbSex.Location = new System.Drawing.Point(648, 19);
             this.cmbSex.Name = "cmbSex";
             this.cmbSex.Size = new System.Drawing.Size(100, 23);
             this.cmbSex.TabIndex = 5;
@@ -209,7 +204,7 @@
             // 
             this.lblSex.AutoSize = true;
             this.lblSex.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblSex.Location = new System.Drawing.Point(715, 58);
+            this.lblSex.Location = new System.Drawing.Point(613, 22);
             this.lblSex.Name = "lblSex";
             this.lblSex.Size = new System.Drawing.Size(28, 15);
             this.lblSex.TabIndex = 10;
@@ -218,7 +213,7 @@
             // numAge
             // 
             this.numAge.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.numAge.Location = new System.Drawing.Point(750, 25);
+            this.numAge.Location = new System.Drawing.Point(820, 20);
             this.numAge.Name = "numAge";
             this.numAge.Size = new System.Drawing.Size(60, 23);
             this.numAge.TabIndex = 4;
@@ -227,7 +222,7 @@
             // 
             this.lblAge.AutoSize = true;
             this.lblAge.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblAge.Location = new System.Drawing.Point(715, 28);
+            this.lblAge.Location = new System.Drawing.Point(758, 20);
             this.lblAge.Name = "lblAge";
             this.lblAge.Size = new System.Drawing.Size(31, 15);
             this.lblAge.TabIndex = 8;
@@ -236,16 +231,16 @@
             // txtName
             // 
             this.txtName.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.txtName.Location = new System.Drawing.Point(480, 55);
+            this.txtName.Location = new System.Drawing.Point(448, 19);
             this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(200, 23);
+            this.txtName.Size = new System.Drawing.Size(158, 23);
             this.txtName.TabIndex = 3;
             // 
             // lblPatientName
             // 
             this.lblPatientName.AutoSize = true;
             this.lblPatientName.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblPatientName.Location = new System.Drawing.Point(430, 58);
+            this.lblPatientName.Location = new System.Drawing.Point(398, 22);
             this.lblPatientName.Name = "lblPatientName";
             this.lblPatientName.Size = new System.Drawing.Size(42, 15);
             this.lblPatientName.TabIndex = 6;
@@ -254,7 +249,7 @@
             // txtSID
             // 
             this.txtSID.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.txtSID.Location = new System.Drawing.Point(280, 55);
+            this.txtSID.Location = new System.Drawing.Point(76, 48);
             this.txtSID.Name = "txtSID";
             this.txtSID.Size = new System.Drawing.Size(120, 23);
             this.txtSID.TabIndex = 2;
@@ -263,25 +258,25 @@
             // 
             this.lblSID.AutoSize = true;
             this.lblSID.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblSID.Location = new System.Drawing.Point(215, 58);
+            this.lblSID.Location = new System.Drawing.Point(15, 51);
             this.lblSID.Name = "lblSID";
-            this.lblSID.Size = new System.Drawing.Size(52, 15);
+            this.lblSID.Size = new System.Drawing.Size(49, 15);
             this.lblSID.TabIndex = 4;
-            this.lblSID.Text = "SED No.:";
+            this.lblSID.Text = "SID No.:";
             // 
             // txtPatientId
             // 
             this.txtPatientId.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.txtPatientId.Location = new System.Drawing.Point(80, 55);
+            this.txtPatientId.Location = new System.Drawing.Point(77, 19);
             this.txtPatientId.Name = "txtPatientId";
-            this.txtPatientId.Size = new System.Drawing.Size(120, 23);
+            this.txtPatientId.Size = new System.Drawing.Size(66, 23);
             this.txtPatientId.TabIndex = 1;
             // 
             // lblPatientId
             // 
             this.lblPatientId.AutoSize = true;
             this.lblPatientId.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblPatientId.Location = new System.Drawing.Point(15, 58);
+            this.lblPatientId.Location = new System.Drawing.Point(12, 22);
             this.lblPatientId.Name = "lblPatientId";
             this.lblPatientId.Size = new System.Drawing.Size(61, 15);
             this.lblPatientId.TabIndex = 2;
@@ -291,7 +286,7 @@
             // 
             this.dtpRunDate.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.dtpRunDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpRunDate.Location = new System.Drawing.Point(80, 25);
+            this.dtpRunDate.Location = new System.Drawing.Point(280, 51);
             this.dtpRunDate.Name = "dtpRunDate";
             this.dtpRunDate.Size = new System.Drawing.Size(120, 23);
             this.dtpRunDate.TabIndex = 0;
@@ -300,7 +295,7 @@
             // 
             this.lblRunDate.AutoSize = true;
             this.lblRunDate.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblRunDate.Location = new System.Drawing.Point(15, 28);
+            this.lblRunDate.Location = new System.Drawing.Point(215, 54);
             this.lblRunDate.Name = "lblRunDate";
             this.lblRunDate.Size = new System.Drawing.Size(58, 15);
             this.lblRunDate.TabIndex = 0;
@@ -754,6 +749,7 @@
             // 
             // pnlAdditional
             // 
+            this.pnlAdditional.Controls.Add(this.txtReportId);
             this.pnlAdditional.Controls.Add(this.txtPCCE);
             this.pnlAdditional.Controls.Add(this.lblPCCE);
             this.pnlAdditional.Controls.Add(this.txtPCV);
@@ -962,6 +958,7 @@
             this.btnPrint.TabIndex = 37;
             this.btnPrint.Text = "PRINT";
             this.btnPrint.UseVisualStyleBackColor = false;
+            this.btnPrint.Click += new System.EventHandler(this.btnPrint_Click);
             // 
             // btnSave
             // 
@@ -976,6 +973,7 @@
             this.btnSave.TabIndex = 36;
             this.btnSave.Text = "SAVE";
             this.btnSave.UseVisualStyleBackColor = false;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // lblTitle
             // 
@@ -998,6 +996,14 @@
             this.lblPoweredBy.Size = new System.Drawing.Size(128, 13);
             this.lblPoweredBy.TabIndex = 5;
             this.lblPoweredBy.Text = "POWERED BY TECHAAM";
+            // 
+            // txtReportId
+            // 
+            this.txtReportId.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.txtReportId.Location = new System.Drawing.Point(150, 270);
+            this.txtReportId.Name = "txtReportId";
+            this.txtReportId.Size = new System.Drawing.Size(100, 23);
+            this.txtReportId.TabIndex = 36;
             // 
             // PATIENT_INFO
             // 
@@ -1036,20 +1042,10 @@
         #endregion
         
         private System.Windows.Forms.GroupBox grpPatientInfo;
-        private System.Windows.Forms.Button btnRefDrDelete;
-        private System.Windows.Forms.Button btnAllDelete;
         private System.Windows.Forms.TextBox txtRefBy;
         private System.Windows.Forms.Label lblRefBy;
-        private System.Windows.Forms.ComboBox cmbSex;
-        private System.Windows.Forms.Label lblSex;
         private System.Windows.Forms.NumericUpDown numAge;
         private System.Windows.Forms.Label lblAge;
-        private System.Windows.Forms.TextBox txtName;
-        private System.Windows.Forms.Label lblPatientName;
-        private System.Windows.Forms.TextBox txtSID;
-        private System.Windows.Forms.Label lblSID;
-        private System.Windows.Forms.TextBox txtPatientId;
-        private System.Windows.Forms.Label lblPatientId;
         private System.Windows.Forms.DateTimePicker dtpRunDate;
         private System.Windows.Forms.Label lblRunDate;
         private System.Windows.Forms.GroupBox grpHematology;
@@ -1120,5 +1116,17 @@
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.Label lblPoweredBy;
+        private System.Windows.Forms.TextBox txtContactNumber;
+        private System.Windows.Forms.Label lblContactNumber;
+        private System.Windows.Forms.ComboBox cmbSex;
+        private System.Windows.Forms.Label lblSex;
+        private System.Windows.Forms.TextBox txtName;
+        private System.Windows.Forms.Label lblPatientName;
+        private System.Windows.Forms.TextBox txtSID;
+        private System.Windows.Forms.Label lblSID;
+        private System.Windows.Forms.TextBox txtPatientId;
+        private System.Windows.Forms.Label lblPatientId;
+        private System.Windows.Forms.TextBox txtReportId;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
     }
 }
